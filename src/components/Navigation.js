@@ -4,11 +4,33 @@ import React, { useState } from 'react';
 const Navigation = () => {
     const [isOpen, setIsOpen] = useState(false);
 
+    const scrollToSection = (sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            const navHeight = 64; // height of your navigation bar
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
+        }
+        setIsOpen(false); // Close mobile menu after clicking
+    };
+
+    const navItems = [
+        { id: 'home', text: 'ראשי' },
+        { id: 'about', text: 'אודות' },
+        { id: 'programs', text: 'תוכניות אימון' },
+        { id: 'contact', text: 'צור קשר' },
+    ];
+
     return (
         <nav className="bg-dark text-white sticky top-0 z-50">
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center h-16 md:justify-center md:space-x-8 md:space-x-reverse">
-                    {/* Mobile Menu Button - Only visible on mobile */}
+                    {/* Mobile Menu Button */}
                     <div className="md:hidden">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
@@ -32,26 +54,36 @@ const Navigation = () => {
                         </button>
                     </div>
 
-                    {/* Logo - Always visible */}
+                    {/* Logo */}
                     <div className="flex-shrink-0 md:absolute md:right-4">
-            <span className="text-2xl font-bold bg-gradient-primary text-transparent bg-clip-text">
-              Daniel Ben Chetrit
-            </span>
+                        <button
+                            onClick={() => scrollToSection('home')}
+                            className="text-2xl font-bold bg-gradient-primary text-transparent bg-clip-text hover:opacity-90"
+                        >
+                            דניאל | אימון אישי
+                        </button>
                     </div>
 
-                    {/* Desktop Menu - Centered */}
+                    {/* Desktop Menu */}
                     <div className="hidden md:flex items-center justify-center space-x-8 space-x-reverse">
-                        <a href="#" className="hover:text-primary-400 transition-colors">בית</a>
-                        <a href="#" className="hover:text-primary-400 transition-colors">אודות</a>
-                        <a href="#" className="hover:text-primary-400 transition-colors">תוכניות</a>
-                        <a href="#" className="hover:text-primary-400 transition-colors">מאמנים</a>
-                        <a href="#" className="hover:text-primary-400 transition-colors">צור קשר</a>
+                        {navItems.map((item) => (
+                            <button
+                                key={item.id}
+                                onClick={() => scrollToSection(item.id)}
+                                className="hover:text-primary-400 transition-colors cursor-pointer"
+                            >
+                                {item.text}
+                            </button>
+                        ))}
                     </div>
 
-                    {/* CTA Button - Positioned to the left */}
+                    {/* CTA Button */}
                     <div className="hidden md:block md:absolute md:left-4">
-                        <button className="bg-gradient-primary text-white px-6 py-2 rounded-full hover:opacity-90 transition-opacity">
-                            התחל עכשיו
+                        <button
+                            onClick={() => scrollToSection('contact')}
+                            className="bg-gradient-primary text-white px-6 py-2 rounded-full hover:opacity-90 transition-opacity"
+                        >
+                            קבע אימון ניסיון
                         </button>
                     </div>
                 </div>
@@ -60,13 +92,20 @@ const Navigation = () => {
                 {isOpen && (
                     <div className="md:hidden">
                         <div className="px-2 pt-2 pb-3 space-y-1 text-right">
-                            <a href="#" className="block px-3 py-2 hover:text-primary-400">בית</a>
-                            <a href="#" className="block px-3 py-2 hover:text-primary-400">אודות</a>
-                            <a href="#" className="block px-3 py-2 hover:text-primary-400">תוכניות</a>
-                            <a href="#" className="block px-3 py-2 hover:text-primary-400">מאמנים</a>
-                            <a href="#" className="block px-3 py-2 hover:text-primary-400">צור קשר</a>
-                            <button className="w-full text-right bg-gradient-primary text-white px-6 py-2 rounded-full hover:opacity-90 mt-4">
-                                התחל עכשיו
+                            {navItems.map((item) => (
+                                <button
+                                    key={item.id}
+                                    onClick={() => scrollToSection(item.id)}
+                                    className="block w-full text-right px-3 py-2 hover:text-primary-400"
+                                >
+                                    {item.text}
+                                </button>
+                            ))}
+                            <button
+                                onClick={() => scrollToSection('contact')}
+                                className="w-full text-right bg-gradient-primary text-white px-6 py-2 rounded-full hover:opacity-90 mt-4"
+                            >
+                                קבע אימון ניסיון
                             </button>
                         </div>
                     </div>
