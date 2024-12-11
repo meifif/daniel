@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
-import { Hero, Features, Programs, Community } from './sections';
+import { Hero, Features, Programs, Community, Powerlifting } from './sections';
 
 const App = () => {
     return (
@@ -24,8 +24,13 @@ const App = () => {
                     <Programs />
                 </section>
 
+                {/* Powerlifting Section */}
+                <section id="powerlifting" className="w-full bg-dark text-white">
+                    <Powerlifting />
+                </section>
+
                 {/* Community Section */}
-                <section id="contact" className="w-full bg-dark text-white">
+                <section id="contact" className="w-full bg-gradient-primary text-white">
                     <Community />
                 </section>
             </main>
